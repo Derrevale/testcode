@@ -37,8 +37,7 @@ if __name__ == '__main__':
 
         # Création des 2 joueurs et de leurs tableaux
         joueur1 = creation_tableau_joueur(dimension_tableau, nom_joueur1)
-        joueur2 = creation_tableau_joueur(dimension_tableau, nom_joueur1)
-
+        joueur2 = creation_tableau_joueur(dimension_tableau, nom_joueur2)
 
         debut_partie(joueur1,joueur2,tableau_invisible_joueur1,tableau_invisible_joueur2,nombre_bateau)
 

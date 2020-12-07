@@ -117,23 +117,26 @@ def choix_action(self, x):
 
 
 def plateau_invisible_adversaire(plateau_invisible, plateau_a_copier):
+    print(plateau_a_copier)
     plateau_invisible = copy.deepcopy(plateau_a_copier)
-    for elements in range(len(plateau_invisible)):
-        for ele in range(len(plateau_invisible[elements])):
-            if plateau_invisible[elements][ele] == "o":
-                plateau_invisible[elements][ele] = "~"
+    print(plateau_a_copier)
+    for elements in range(len(plateau_invisible.plateau_joueur)):
+        for ele in range(len(plateau_invisible.plateau_joueur[elements])):
+            if plateau_invisible.plateau_joueur[elements][ele] == "o":
+                plateau_invisible.plateau_joueur[elements][ele] = "~"
     for elements in plateau_invisible:
         print(elements)
 
 
-def tour_de_jeu(x, y, z, adversaire, plateau_invisible):
+def tour_de_jeu(x, z, adversaire, plateau_invisible):
     # x = joueur actuel
     # z = listeplateau joueur adverse
 
     while True:
         try:
-            plateau_invisible_adversaire(plateau_invisible, z)
-            plateau_invisible_adversaire(plateau_invisible, z)
+            print(adversaire)
+            print("non")
+            plateau_invisible_adversaire(plateau_invisible, adversaire)
             choix_col_joueur = input(
                 "Joueur : {}, Veuillez introduire la colonne : ".format(x.nom))
             choix_rangee_joueur = int(
@@ -169,7 +172,7 @@ def positionner_bateau(joueur, number_of_ships):
             joueur.torpilleur = torpilleur
             joueur.nom_des_bateaux.append("torpilleur")
             bateau = torpilleur
-        else:
+        elif elements == 3:
             croiseur = Bateau("croiseur", 2)
             joueur.croiseur = croiseur
             joueur.nom_des_bateaux.append("croiseur")
@@ -195,7 +198,6 @@ def positionner_bateau(joueur, number_of_ships):
                 break
     print(joueur.nom_joueur)
     print(joueur.porte_avion.coordonnees_bateau)
-    afficher_tableau(joueur.plateau_joueur)
     fin_de_tour = False
     while fin_de_tour == False:
         print("Votre tour est fini , le joueur suivant peut s'installer devant l'ordinateur...\n\n\n")
@@ -251,10 +253,10 @@ def debut_partie(joueur1,joueur2,
                  number_of_ships):
     print(number_of_ships)
     victoire = False
-
+    print("test2")
     positionner_bateau(joueur1, number_of_ships)
     positionner_bateau(joueur2, number_of_ships)
-
+    print("test3")
     while victoire == False:
 
         if number_of_ships == 3:
@@ -289,7 +291,7 @@ def verif_3_BATEAUX(joueur1,
                     tableau_invisible_joueur1, tableau_invisible_joueur2,
                     ):
     print("plateau du joueur 2 : \n")
-    tour_de_jeu(joueur1, joueur2, tableau_invisible_joueur2)
+    tour_de_jeu(joueur1, joueur2, joueur2.plateau_joueur, tableau_invisible_joueur2)
     rafraichir_position(joueur2,joueur2.porte_avion)
     verif_bateau(joueur2.porte_avion, joueur1)
     rafraichir_position(joueur2, joueur2.torpilleur)
@@ -298,7 +300,7 @@ def verif_3_BATEAUX(joueur1,
     verif_bateau(joueur2.croiseur, joueur1)
 
     print("plateau du joueur 1 : \n")
-    tour_de_jeu(joueur2, joueur1, tableau_invisible_joueur1)
+    tour_de_jeu(joueur2, joueur1, joueur1.plateau_joueur, tableau_invisible_joueur1)
     rafraichir_position(joueur1, joueur1.porte_avion)
     verif_bateau(joueur1.porte_avion, joueur2)
     rafraichir_position(joueur1, joueur1.torpilleur)
@@ -307,35 +309,33 @@ def verif_3_BATEAUX(joueur1,
     verif_bateau(joueur1.croiseur, joueur2)
 
 
-def verif_2_BATEAUX(plateau_joueur1, joueur1, liste_plateau1,
-                    plateau_joueur2, joueur2, liste_plateau2,
+def verif_2_BATEAUX(joueur1,joueur2,
                     tableau_invisible_joueur1, tableau_invisible_joueur2,
                     ):
     print("plateau du joueur 2 : \n")
-    tour_de_jeu(joueur1, plateau_joueur2, liste_plateau2, joueur2, tableau_invisible_joueur2)
-    rafraichir_position(liste_plateau2, joueur2.porte_avion)
+    tour_de_jeu(joueur1, joueur2, joueur2.plateau_joueur, tableau_invisible_joueur2)
+    rafraichir_position(joueur2, joueur2.porte_avion)
     verif_bateau(joueur2.porte_avion, joueur1)
-    rafraichir_position(liste_plateau2, joueur2.torpilleur)
+    rafraichir_position(joueur2, joueur2.torpilleur)
     verif_bateau(joueur2.torpilleur, joueur1)
 
     print("plateau du joueur 1 : \n")
-    tour_de_jeu(joueur2, plateau_joueur1, liste_plateau1, joueur1, tableau_invisible_joueur1)
-    rafraichir_position(liste_plateau1, joueur1.porte_avion)
+    tour_de_jeu(joueur2, joueur1, joueur1.plateau_joueur, tableau_invisible_joueur1)
+    rafraichir_position(joueur1, joueur1.porte_avion)
     verif_bateau(joueur1.porte_avion, joueur2)
-    rafraichir_position(liste_plateau1, joueur1.torpilleur)
+    rafraichir_position(joueur1,joueur1.torpilleur)
     verif_bateau(joueur1.torpilleur, joueur2)
 
 
-def verif_1_BATEAUX(plateau_joueur1, joueur1, liste_plateau1,
-                    plateau_joueur2, joueur2, liste_plateau2,
+def verif_1_BATEAUX(joueur1,joueur2,
                     tableau_invisible_joueur1, tableau_invisible_joueur2,
                     ):
     print("plateau du joueur 2 : \n")
-    tour_de_jeu(joueur1, plateau_joueur2, liste_plateau2, joueur2, tableau_invisible_joueur2)
-    rafraichir_position(liste_plateau2, joueur2.porte_avion)
+    tour_de_jeu(joueur1, joueur2, joueur2.plateau_joueur, tableau_invisible_joueur2)
+    rafraichir_position(joueur2, joueur2.porte_avion)
     verif_bateau(joueur2.porte_avion, joueur1)
 
     print("plateau du joueur 1 : \n")
-    tour_de_jeu(joueur2, plateau_joueur1, liste_plateau1, joueur1, tableau_invisible_joueur1)
-    rafraichir_position(liste_plateau1, joueur1.porte_avion)
+    tour_de_jeu(joueur2, joueur1, joueur1.plateau_joueur, tableau_invisible_joueur1)
+    rafraichir_position(joueur1, joueur1.porte_avion)
     verif_bateau(joueur1.porte_avion, joueur2)
